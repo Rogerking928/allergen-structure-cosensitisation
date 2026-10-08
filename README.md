@@ -38,6 +38,7 @@ Run from `analysis/`, in this order:
 | Joint-model coefficient difference | `coef_diff.py` | `out/coef_diff.json` |
 | Split-sample analysis | `holdout.py` | `out/holdout.json` |
 | Collect every reported number | `summary.py` | `out/summary.json` |
+| Additional sensitivity analyses | `extra.py` | `out/extra.json` |
 | Figures | `figs.py` | `out/Figure_*.png` |
 | Tables, figure book, source data | `book.py` | deliverables |
 

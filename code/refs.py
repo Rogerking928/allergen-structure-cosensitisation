@@ -13,6 +13,12 @@ POOL = {
         "Aalberse, R. C. (2000). Structural biology of allergens. Journal "
         "of Allergy and Clinical Immunology, 106(2), 228–238. "
         "https://doi.org/10.1067/mai.2000.108434",
+    "andreeva2020":
+        "Andreeva, A., Kulesha, E., Gough, J., & Murzin, A. G. (2020). The "
+        "SCOP database in 2020: expanded classification of representative "
+        "family and superfamily domains of known protein structures. "
+        "Nucleic Acids Research, 48(D1), D376–D382. "
+        "https://doi.org/10.1093/nar/gkz1064",
     "blum2025":
         "Blum, M., Andreeva, A., Florentino, L. C., Chuguransky, S. R., "
         "Grego, T., Hobbs, E., et al. (2025). InterPro: the protein "
@@ -23,11 +29,17 @@ POOL = {
         "of food safety assessment of foods derived from recombinant-DNA "
         "plants (CAC/GL 45-2003), Annex 1: Assessment of possible "
         "allergenicity. Rome: FAO/WHO.",
+    "cupin2005":
+        "Barre, A., Borges, J. P., & Rougé, P. (2005). Molecular modelling "
+        "of the major peanut allergen Ara h 1 and other homotrimeric "
+        "allergens of the cupin superfamily: a structural basis for their "
+        "IgE-binding cross-reactivity. Biochimie, 87(6), 499–506. "
+        "https://doi.org/10.1016/j.biochi.2005.02.011",
     "datagouv2024":
-        "Société Française d'Allergologie, & AllergoBioNet. (2024). Allergen "
-        "Chip Challenge database (Version 1) [dataset]. data.gouv.fr; last "
-        "updated 26 July 2024; Licence Ouverte / Open Licence 2.0. "
-        "https://doi.org/10.60597/j5fe-g420",
+        "Société Française d'Allergologie. (2024). Allergen Chip Challenge "
+        "[dataset]. data.gouv.fr; last updated 26 July 2024; Licence "
+        "Ouverte / Open Licence 2.0. "
+        "https://www.data.gouv.fr/datasets/allergen-chip-challenge",
     "dramburg2023":
         "Dramburg, S., Hilger, C., Santos, A. F., de Las Vecillas, L., "
         "Aalberse, R. C., Acevedo, N., et al. (2023). EAACI Molecular "
@@ -35,6 +47,16 @@ POOL = {
         "Official Publication of the European Society of Pediatric Allergy "
         "and Immunology, 34 Suppl 28, e13854. "
         "https://doi.org/10.1111/pai.13854",
+    "heffler2018":
+        "Heffler, E., Puggioni, F., Peveri, S., Montagni, M., Canonica, G. "
+        "W., & Melioli, G. (2018). Extended IgE profile based on an "
+        "allergen macroarray: a novel tool for precision medicine in "
+        "allergy diagnosis. World Allergy Organization Journal, 11(1), 7. "
+        "https://doi.org/10.1186/s40413-018-0186-3",
+    "hilger2012":
+        "Hilger, C., Kuehn, A., & Hentges, F. (2012). Animal lipocalin "
+        "allergens. Current Allergy and Asthma Reports, 12(5), 438–447. "
+        "https://doi.org/10.1007/s11882-012-0283-2",
     "jumper2021":
         "Jumper, J., Evans, R., Pritzel, A., Green, T., Figurnov, M., "
         "Ronneberger, O., et al. (2021). Highly accurate protein structure "
@@ -44,8 +66,15 @@ POOL = {
         "Kabasser, S., Radauer, C., Eber, E., Haber, M. E., Hieden, K., "
         "Zieglmayer, P., et al. (2024). Cosensitization to the 3 "
         "Nonhomologous Major Cashew Allergens Ana o 1, Ana o 2, and Ana o 3 "
-        "Is Caused by IgE Cross-reactivity. J Investig Allergol Clin "
-        "Immunol, 34(1), 38–48. https://doi.org/10.18176/jiaci.0867",
+        "Is Caused by IgE Cross-reactivity. Journal of Investigational "
+        "Allergology & Clinical Immunology, 34(1), 38–48. "
+        "https://doi.org/10.18176/jiaci.0867",
+    "lupinek2014":
+        "Lupinek, C., Wollmann, E., Baar, A., Banerjee, S., Breiteneder, "
+        "H., Broecker, B. M., et al. (2014). Advances in "
+        "allergen-microarray technology for diagnosis and monitoring of "
+        "allergy: the MeDALL allergen-chip. Methods (San Diego, Calif.), "
+        "66(1), 106–119. https://doi.org/10.1016/j.ymeth.2013.10.008",
     "martinroche2026":
         "Martinroche, G., Guemari, A., Apoil, P. A., Annesi-Maesano, I., "
         "Fromentin, E., Guilleminault, L., et al. (2026). Allergen Chip "
@@ -69,6 +98,11 @@ POOL = {
         "Grego, T., Pinto, B. L., et al. (2025). The Pfam protein families "
         "database: embracing AI/ML. Nucleic Acids Research, 53(D1), "
         "D523–D534. https://doi.org/10.1093/nar/gkae997",
+    "pichler2015":
+        "Pichler, U., Hauser, M., Wolf, M., Bernardi, M. L., Gadermaier, "
+        "G., Weiss, R., et al. (2015). Pectate lyase pollen allergens: "
+        "sensitization profiles and cross-reactivity pattern. PloS One, "
+        "10(5), e0120038. https://doi.org/10.1371/journal.pone.0120038",
     "pomes2018":
         "Pomés, A., Davies, J. M., Gadermaier, G., Hilger, C., Holzhauser, "
         "T., Lidholm, J., et al. (2018). WHO/IUIS Allergen Nomenclature: "
@@ -105,14 +139,25 @@ POOL = {
         "Database in 2024: providing structure coverage for over 214 "
         "million protein sequences. Nucleic Acids Research, 52(D1), "
         "D368–D375. https://doi.org/10.1093/nar/gkad1011",
+    "walnut2024":
+        "Castromil-Benito, E. S., Betancor, D., Parrón-Ballesteros, J., "
+        "Bueno-Díaz, C., Gutiérrez-Díaz, G., Turnay, J., et al. (2024). "
+        "Walnut Jug r 1 is Responsible for Primary Sensitization among "
+        "Patients Suffering Walnut-Hazelnut 2S Albumin Cross-Reactivity. "
+        "Journal of Agricultural and Food Chemistry, 72(32), 18162–18170. "
+        "https://doi.org/10.1021/acs.jafc.4c03603",
     "zhang2004":
         "Zhang, Y., & Skolnick, J. (2004). Scoring function for automated "
         "assessment of protein structure template quality. Proteins, 57(4), "
         "702–710. https://doi.org/10.1002/prot.20264",
+    "zhang2005":
+        "Zhang, Y., & Skolnick, J. (2005). TM-align: a protein structure "
+        "alignment algorithm based on the TM-score. Nucleic Acids Research, "
+        "33(7), 2302–2309. https://doi.org/10.1093/nar/gki524",
     "zou2026":
         "Zou, P., Fan, Y., Xie, C., Xia, W., Liu, Y., Tao, P., et al. "
         "(2026). Allergen Sensitization Profiles and Co-Sensitization "
         "Networks in Children with Allergic Rhinitis and Asthma: A "
         "Propensity Score-Matched Retrospective Study. Journal of Asthma "
-        "and Allergy, 19, 1–12. https://doi.org/10.2147/JAA.S620785",
+        "and Allergy, 19, 620785. https://doi.org/10.2147/JAA.S620785",
 }

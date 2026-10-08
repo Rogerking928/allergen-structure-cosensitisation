@@ -45,6 +45,16 @@ KEYS = {
     "paysan2025": "39540428",        # Pfam 2025
     "jumper2021": "34265844",        # AlphaFold
     "kabasser2024": "36331131",      # co-sensitisation to non-homologous allergens of one source
+    "zhang2005": "15849316",         # TM-align 演算法本身（本文全程用它）
+    "andreeva2020": "31724711",      # SCOP 2020（同源判定的另一半來源）
+    # 平台與閾值
+    "heffler2018": "29743964",       # ALEX macroarray
+    "lupinek2014": "24161540",       # ISAC / MeDALL allergen-chip
+    # 那 116 對裡已被實驗描述過的關係（審閱要求逐一引用，避免讀成新發現）
+    "hilger2012": "22791068",        # 動物 lipocalin 過敏原
+    "pichler2015": "25978036",       # 果膠裂解酶花粉過敏原的交叉反應（Cry j 1 / Cup a 1 / Jun a 1）
+    "walnut2024": "39083591",        # 核桃—榛果 2S albumin 交叉反應
+    "cupin2005": "15935274",         # cupin 超家族的同三聚體過敏原（7S/11S）
 }
 
 MANUAL = {

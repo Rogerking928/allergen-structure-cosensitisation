@@ -537,7 +537,7 @@ def figure3():
     js = rb[("joint model", "sequence identity (rank, SD)")]
     cd = json.load(open(OUT / "coef_diff.json"))
     lo_, hi_ = cd["diff_ci"]
-    note = ax.annotate("Equal discrimination.\n"
+    note = ax.annotate("No difference detected.\n"
                 "Joint model, homologous pairs,\n"
                 f"per SD of rank: TM-score {jt['estimate']:.2f},\n"
                 f"identity {js['estimate']:.2f}; difference {cd['diff']:.2f}\n"
@@ -629,6 +629,10 @@ def figure4():
     ax.legend(handles=handles, frameon=False, fontsize=5.8, loc="upper center",
               bbox_to_anchor=(0.5, 0.06), ncol=3, handletextpad=0.3, labelspacing=0.3,
               columnspacing=0.8, borderaxespad=0)
+    n_nonhom = len(en)
+    ax.annotate(f"{n_nonhom:,} of {len(G.edges()):,} edges join components that are not "
+                f"homologous", xy=(0.5, 1.0), xycoords="axes fraction", ha="center", va="top",
+                fontsize=6.2, color=F.GREY)
     F.panel(ax, "A", dx=-4, dy=-6)
 
     # --- B 家族 × 家族，格子裡直接寫數值（純色階在對角線會飽和成同一個紅）

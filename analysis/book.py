@@ -201,6 +201,7 @@ def table1():
         return dict(n=f"{len(g):,}", comps=f"{ncomp}",
                     age=f"{age.median():.0f} ({age.quantile(.25):.0f}-{age.quantile(.75):.0f})",
                     sens=f"{(g.Sensitization == 1).mean() * 100:.1f}",
+                    gender1=f"{(g.Gender == 1).mean() * 100:.1f}",
                     pos1=f"{(b >= 1).mean() * 100:.1f}",
                     breadth=f"{_n(b.median())} ({_n(b.quantile(.25))}-{_n(b.quantile(.75))})",
                     pctpos=f"{pct.median():.1f} ({pct.quantile(.25):.1f}-{pct.quantile(.75):.1f})")
@@ -212,6 +213,7 @@ def table1():
     r("Patients, n", "n")
     r("Components measured, n", "comps")
     r("Age, years, median (IQR)", "age")
+    r("Gender code 1 of the released 0/1 variable, %", "gender1")
     r("Sensitised (database variable), %", "sens")
     r("Positive to ≥ 1 component, %", "pos1")
     r("Positive components per patient, median (IQR)", "breadth")
@@ -380,6 +382,73 @@ def tableS5():
     return rows
 
 
+def tableS6():
+    """審閱要求的補強敏感度分析（analysis/extra.py）。"""
+    e = json.load(open(OUT / "extra.json"))
+    f2 = lambda v: f"{v:.2f}"
+    rows = [["Analysis", "Result"]]
+    rows.append(["Definition of strong co-sensitisation", ""])
+    for r in e["z_thresholds"]:
+        rows.append([f"  z > {r['z']:.0f}: pairs strongly co-sensitised",
+                     f"{r['n_strong']:,} ({r['pct']:.1f}%); above the structural threshold and "
+                     f"below the sequence criterion {r['struct_only_strong']} of "
+                     f"{r['struct_only_n']}, against {r['neither_pct']:.1f}% of pairs meeting "
+                     f"neither"])
+    rows.append(["Multiplicity", ""])
+    fdr = e["fdr"]
+    rows.append(["  Pooled estimates with a Benjamini-Hochberg q below 0.05",
+                 f"{fdr['q05']:,} of {fdr['n']:,}; all {fdr['strong_q05']:,} strongly "
+                 f"co-sensitised pairs qualify"])
+    rows.append(["  Of the pairs flagged by structure alone",
+                 f"{fdr['struct_only_q05']} of {fdr['struct_only_n']} have q < 0.05"])
+    rows.append(["Comparison of the two measures", ""])
+    da, db = e["delong_all"], e["auc_diff_boot_all"]
+    rows.append(["  Difference in area under the curve, all pairs (structure minus sequence)",
+                 f"{da['diff']:.3f}; DeLong P = {da['p']:.2f}; bootstrap over allergens "
+                 f"{db['lo']:.2f} to {db['hi']:.2f}"])
+    dh, dbh = e["delong_homologous"], e["auc_diff_boot_homologous"]
+    rows.append(["  Difference in area under the curve, homologous pairs",
+                 f"{dh['diff']:.3f}; DeLong P = {dh['p']:.3f}; bootstrap over allergens "
+                 f"{dbh['lo']:.2f} to {dbh['hi']:.2f}"])
+    rows.append(["Normalisation of the TM-score", ""])
+    n = e["normalisation"]
+    rows.append(["  Spearman rho within homologous pairs, longer chain (used throughout) "
+                 "and shorter chain",
+                 f"{n['rho_long']:.2f} and {n['rho_short']:.2f}"])
+    rows.append(["  Non-homologous pairs reaching a TM-score of 0.5, longer and shorter chain",
+                 f"{0} and {n['nonhom_ge05_short']} (highest TM-score "
+                 f"{n['nonhom_max_long']:.2f} and {n['nonhom_max_short']:.2f})"])
+    rows.append(["  Pairs above the structural threshold and below the sequence criterion",
+                 f"{n['struct_only_long']} of which {n['struct_only_long_strong']} strongly "
+                 f"co-sensitised, against {n['struct_only_short']} of which "
+                 f"{n['struct_only_short_strong']} with the shorter chain"])
+    rows.append(["  Pairs meeting the sequence criterion only",
+                 f"{n['seq_only_long']} and {n['seq_only_short']}"])
+    rows.append(["Continuous rather than dichotomised IgE", ""])
+    c = e["continuous"]
+    rows.append(["  Partial Spearman between the two components' IgE values given breadth, "
+                 "against TM-score, homologous pairs",
+                 f2(c["rho_tm_vs_continuous_homologous"])])
+    rows.append(["  The same against 80-aa window identity",
+                 f2(c["rho_seq_vs_continuous_homologous"])])
+    rows.append(["  Agreement with the dichotomised estimate, all analysed pairs",
+                 f2(c["agreement_with_binary"])])
+    rows.append(["Breadth computed only from components of other families", ""])
+    dj = e["disjoint_breadth"]
+    rows.append(["  Spearman rho between TM-score and co-sensitisation, homologous pairs",
+                 f2(dj["rho_tm_homologous"])])
+    rows.append(["  Median odds ratio of non-homologous pairs",
+                 f"{dj['median_or_nonhom']:.1f}"])
+    rows.append(["  Agreement with the main estimate, all analysed pairs",
+                 f2(dj["agreement_with_main"])])
+    rows.append(["Heterogeneity between platforms", ""])
+    h = e["heterogeneity"]
+    rows.append([f"  Pairs estimated on more than one platform",
+                 f"{h['n_pairs_multi']:,}; median I2 {h['median_I2']:.0f}%, "
+                 f"{h['pct_I2_gt50']:.0f}% above 50%"])
+    return rows
+
+
 def tableS2_sens():
     """敏感度分析（ρ 一律附節點自助法 95% CI）。"""
     s = summ()
@@ -471,7 +540,9 @@ def items():
                   "2014-2023). A component counts as measured on a platform when a value is "
                   "present for at least 80% of that platform's patients; positivity is 0.3 ISU-E "
                   "or kUA/L. The last column counts components measured on at least one platform. "
-                  "Sex is released as an undocumented 0/1 code and is therefore not reported. "
+                  "Sex is released as an undocumented 0/1 code, so the two levels cannot be "
+                  "labelled; the distribution is given as released, and 62 patients have no "
+                  "value. "
                   "IQR, interquartile range."),
         dict(kind="table",
              caption="Table 2. Co-sensitisation between homologous allergens from different "
@@ -505,8 +576,8 @@ def items():
                      "but not beyond, homologous allergen families.",
              note=f"(A) Co-sensitisation for pairs from the same source species "
                   f"(n = {s['same_species_n']}; the {s['same_species_n'] + n_sub} same-species pairs "
-                  f"in Supplementary Table S1 include {n_sub} pairs of domains cut from one "
-                  f"precursor, "
+                  f"in Supplementary Table S1 include {n_sub} pairs in which one member is a "
+                  f"domain cut from one precursor (all involve Hev b 6.01), "
                   f"which are not shown), homologous pairs from different species "
                   f"(n = {s['homologous_n']}) and non-homologous pairs "
                   f"(n = {s['nonhomologous_n']:,}); bars give the median and interquartile range "
@@ -532,7 +603,9 @@ def items():
                   f"identity over 80 residues) and a TM-score of 0.5, each quadrant is labelled "
                   f"with its number of pairs and median odds ratio, and pairs with no detectable "
                   f"local sequence similarity are plotted at \"none\". Open circles are the pairs "
-                  f"shown in C. (B) Pairs and strongly co-sensitised pairs in each cell of the "
+                  f"shown in C; two of the 14 have no detectable sequence similarity and nearly "
+                  f"the same TM-score, so they overlap at \"none\". (B) Pairs and strongly "
+                  f"co-sensitised pairs in each cell of the "
                   f"two criteria. (C) The 14 pairs with the highest z among the {q['n']} that "
                   f"fall below the sequence criterion but reach a TM-score of 0.5, with their "
                   f"TM-score and 80-aa window identity; all {q['n']} are listed in Supplementary "
@@ -542,7 +615,7 @@ def items():
                   f"homologous pairs the two coefficients cannot be distinguished (Supplementary "
                   f"Table S4). The evidence that structure adds "
                   f"information is the {q['n']} pairs it flags on its own (B, C) and their "
-                  f"replication in the split-sample analysis (Supplementary Table S5), not a "
+                  f"replication in the split-sample analysis (Supplementary Table S6), not a "
                   f"difference in the areas under the curve or in the joint-model coefficients. AUC, area under the "
                   f"receiver operating characteristic curve; CI, confidence interval."),
         dict(kind="figure", path=OUT / "Figure_4.png",
@@ -576,6 +649,9 @@ def items():
              rows=tableS2(),
              note="Allergen names were resolved against the WHO/IUIS Allergen Nomenclature "
                   "database, which lists a UniProt accession for each isoallergen. A pair was "
+                  "The exclusions are applied in the order listed and each pair is counted once "
+                  "at the first rule it meets, so the five same-species pairs that also involve a "
+                  "domain of one precursor are counted as same-species. A pair was "
                   "estimated on a platform when each member had at least 15 positive patients, at "
                   "least 50 patients had results for both and at least 5 were positive to both. "
                   "Counts of components are chip analytes: a protein measured as more than one "
@@ -611,7 +687,19 @@ def items():
                   "pLDDT is the AlphaFold per-residue confidence, averaged "
                   f"over the model; {pl['n_components_below']} of {pl['n_components']} components "
                   "have a mean pLDDT below 70."),
-        dict(kind="table", caption="Supplementary Table S5. Split-sample analysis with the "
+        dict(kind="table", caption="Supplementary Table S5. Additional sensitivity analyses.",
+             rows=tableS6(),
+             note="Benjamini-Hochberg q values are computed over all 18,848 pooled estimates. "
+                  "DeLong's test treats pairs as independent observations, which they are not, "
+                  "so the bootstrap over allergens is the comparison we rely on. The TM-score is "
+                  "normalised by the longer chain throughout the article; normalising by the "
+                  "shorter chain lets a short protein resemble a much longer one, and the "
+                  "non-homologous pairs it brings above 0.5 have a median shorter-chain length of "
+                  "85 residues and are not co-sensitised. Breadth computed from components of "
+                  "other families removes the arithmetic dependence created by conditioning on a "
+                  "count that includes the two components being compared. I2 is the proportion of "
+                  "variance between platform-specific estimates not explained by sampling error."),
+        dict(kind="table", caption="Supplementary Table S6. Split-sample analysis with the "
                                    "outcome defined in a disjoint set of patients.",
              rows=tableS5(),
              note="Patients were split in half at random within each platform and the "
@@ -679,9 +767,9 @@ def source_data(path, main, supp):
     order = [t("Table 1"), t("Table 2")]
     for k in "1234":
         order += [x for x in figs_ if x[0].split()[1][0] == k]
-    order += [t(f"Table S{i}") for i in range(1, 6)]
+    order += [t(f"Table S{i}") for i in range(1, 7)]
     order += [x for x in figs_ if x[0].split()[1].startswith("S")]
-    assert len(order) == len(figs_) + 7, "有分頁沒排進去"
+    assert len(order) == len(figs_) + 8, "有分頁沒排進去"
     SD.write(path, order)
 
 
@@ -714,6 +802,8 @@ def data_s1(path):
     acc = m.groupby("component").accession.apply(lambda v: ";".join(sorted(set(v)))).to_dict()
     ann = homology.table()
     fam = m.drop_duplicates("component").set_index("component")
+    q = pd.read_csv(OUT / "qvalues.csv")
+    d = d.merge(q, on=["a", "b"], how="left")
     d["odds_ratio"] = np.exp(d.beta)
     d["ci_low"] = np.exp(d.beta - 1.96 * d.se)
     d["ci_high"] = np.exp(d.beta + 1.96 * d.se)
@@ -727,7 +817,9 @@ def data_s1(path):
     d = d.rename(columns={"a": "component_a", "b": "component_b", "beta": "adjusted_log_OR",
                           "se": "SE", "k_chip": "platforms", "n_total": "patients",
                           "tm": "TM_score", "seqid": "full_length_identity_pct",
-                          "seqid80": "best_80aa_window_identity_pct"})
+                          "seqid80": "best_80aa_window_identity_pct",
+                          "p_value": "p_value_two_sided",
+                          "q_value": "q_value_benjamini_hochberg"})
     d.to_csv(path, index=False)
     return len(d)
 
