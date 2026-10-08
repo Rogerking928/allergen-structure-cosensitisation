@@ -611,9 +611,9 @@ def items():
                   f"TM-score and 80-aa window identity; all {q['n']} are listed in Supplementary "
                   f"Table S3. (D) Discrimination for strong co-sensitisation, with the two binary "
                   f"criteria as points; confidence intervals are from 2,000 bootstrap resamples "
-                  f"of allergens. The two similarity measures discriminate equally well; in a joint model on "
-                  f"homologous pairs the two coefficients cannot be distinguished (Supplementary "
-                  f"Table S4). The evidence that structure adds "
+                  f"of allergens. Neither measure discriminated better than the other, and the "
+                  f"comparison is not powered to establish equivalence (Supplementary Tables S4 "
+                  f"and S5). The evidence that structure adds "
                   f"information is the {q['n']} pairs it flags on its own (B, C) and their "
                   f"replication in the split-sample analysis (Supplementary Table S6), not a "
                   f"difference in the areas under the curve or in the joint-model coefficients. AUC, area under the "
@@ -648,7 +648,7 @@ def items():
                                    "allergen pairs.",
              rows=tableS2(),
              note="Allergen names were resolved against the WHO/IUIS Allergen Nomenclature "
-                  "database, which lists a UniProt accession for each isoallergen. A pair was "
+                  "database, which lists a UniProt accession for each isoallergen. "
                   "The exclusions are applied in the order listed and each pair is counted once "
                   "at the first rule it meets, so the five same-species pairs that also involve a "
                   "domain of one precursor are counted as same-species. A pair was "

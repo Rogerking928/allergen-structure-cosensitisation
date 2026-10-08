@@ -36,10 +36,10 @@ POOL = {
         "IgE-binding cross-reactivity. Biochimie, 87(6), 499–506. "
         "https://doi.org/10.1016/j.biochi.2005.02.011",
     "datagouv2024":
-        "Société Française d'Allergologie. (2024). Allergen Chip Challenge "
-        "[dataset]. data.gouv.fr; last updated 26 July 2024; Licence "
-        "Ouverte / Open Licence 2.0. "
-        "https://www.data.gouv.fr/datasets/allergen-chip-challenge",
+        "Société Française d'Allergologie, & AllergoBioNet. (2024). "
+        "Allergen Chip Challenge database (Version 1) [dataset]. "
+        "data.gouv.fr; last updated 26 July 2024; Licence Ouverte / Open "
+        "Licence 2.0. https://doi.org/10.60597/j5fe-g420",
     "dramburg2023":
         "Dramburg, S., Hilger, C., Santos, A. F., de Las Vecillas, L., "
         "Aalberse, R. C., Acevedo, N., et al. (2023). EAACI Molecular "
@@ -159,5 +159,5 @@ POOL = {
         "(2026). Allergen Sensitization Profiles and Co-Sensitization "
         "Networks in Children with Allergic Rhinitis and Asthma: A "
         "Propensity Score-Matched Retrospective Study. Journal of Asthma "
-        "and Allergy, 19, 620785. https://doi.org/10.2147/JAA.S620785",
+        "and Allergy, 19, 1–12. https://doi.org/10.2147/JAA.S620785",
 }

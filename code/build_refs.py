@@ -57,13 +57,20 @@ KEYS = {
     "cupin2005": "15935274",         # cupin 超家族的同三聚體過敏原（7S/11S）
 }
 
+# PubMed 的 pages 欄位對某些期刊放的是稿件編號而不是頁碼。
+# 這裡逐篇覆寫，值一律以 Crossref 為準（2026-10-08 查證）。
+PAGES = {
+    "42333264": "1–12",   # J Asthma Allergy 19:1-12；PubMed 給的 620785 是稿件編號
+}
+
 MANUAL = {
     # The data release itself. Checked on data.gouv.fr 2026-10-03: producer Société
     # Française d'Allergologie, last updated 26 July 2024, Licence Ouverte 2.0.
     "datagouv2024":
-        "Société Française d'Allergologie. (2024). Allergen Chip Challenge "
-        "[dataset]. data.gouv.fr; last updated 26 July 2024; Licence Ouverte / "
-        "Open Licence 2.0. https://www.data.gouv.fr/datasets/allergen-chip-challenge",
+        "Société Française d'Allergologie, & AllergoBioNet. (2024). Allergen "
+        "Chip Challenge database (Version 1) [dataset]. data.gouv.fr; last "
+        "updated 26 July 2024; Licence Ouverte / Open Licence 2.0. "
+        "https://doi.org/10.60597/j5fe-g420",
     # The sequence criterion. Codex Alimentarius guideline CAC/GL 45-2003, Annex 1
     # (assessment of possible allergenicity): >35% identity over a window of 80 amino
     # acids. Wording checked against secondary summaries (AllergenOnline help page).
@@ -171,7 +178,7 @@ def main():
         jour = journal_title(full.get(pmid, r["source"]))
         vol = r.get("volume", "")
         iss = r.get("issue", "")
-        pages = expand_pages(r.get("pages") or "")
+        pages = PAGES.get(pmid) or expand_pages(r.get("pages") or "")
         doi = ""
         for aid in r.get("articleids", []):
             if aid.get("idtype") == "doi":
